@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+      "outDir": "dist",
+      "esModuleInterop": true,
+      "module": "es6",
+      "moduleResolution": "node",
+      "rootDirs": [
+        "src",
+        "tests"
+      ],
+      "baseUrl": "src",
+      "paths": {
+        "@/*": [
+          "*"
+        ]
+      },
+      "plugins": [
+        {
+          "transform": "typescript-transform-paths"
+        }
+      ]
+    },
+    "include": [
+      "src",
+      "tests"
+    ],
+    "ts-node": {
+      "esm": true
+    },
+}
