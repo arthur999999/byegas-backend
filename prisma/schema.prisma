@@ -13,8 +13,8 @@ model alarms {
   chainId   Int
   valueGas  Int
   inGwei    Boolean
-  createdAt DateTime @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   users     users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "alarms_fk0")
   chains    chains   @relation(fields: [chainId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "alarms_fk1")
 }
@@ -24,8 +24,8 @@ model chains {
   name      String      @unique
   apiGas    String
   image     String
-  createdAt DateTime    @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime    @db.Timestamp(6)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   alarms    alarms[]
   comments  comments[]
   favorites favorites[]
@@ -37,8 +37,8 @@ model comments {
   userId    Int
   chainId   Int
   text      String
-  createdAt DateTime @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   users     users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk0")
   chains    chains   @relation(fields: [chainId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "comments_fk1")
 }
@@ -47,8 +47,8 @@ model favorites {
   id        Int      @id(map: "favorites_pk") @default(autoincrement())
   userId    Int
   chainId   Int
-  createdAt DateTime @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   users     users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorites_fk0")
   chains    chains   @relation(fields: [chainId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorites_fk1")
 }
@@ -57,8 +57,8 @@ model image {
   id        Int      @id(map: "image_pk") @default(autoincrement())
   userId    Int
   imageUrl  String
-  createdAt DateTime @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   users     users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_fk0")
 }
 
@@ -66,8 +66,8 @@ model sessions {
   id        Int      @id(map: "sessions_pk") @default(autoincrement())
   userId    Int
   token     String   @unique
-  createdAt DateTime @default(dbgenerated("'2023-03-26 00:02:28.588275'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   users     users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sessions_fk0")
 }
 
@@ -75,8 +75,8 @@ model telegram {
   id           Int      @id(map: "telegram_pk") @default(autoincrement())
   userId       Int
   userTelegram String   @unique
-  createdAt    DateTime @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt    DateTime @db.Timestamp(6)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   users        users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "telegram_fk0")
 }
 
@@ -85,8 +85,8 @@ model tokens {
   name      String
   apiToken  String
   chainId   Int
-  createdAt DateTime @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime @db.Timestamp(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   chains    chains   @relation(fields: [chainId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tokens_fk0")
 }
 
@@ -95,8 +95,8 @@ model users {
   name      String
   email     String      @unique
   password  String
-  createdAt DateTime    @default(dbgenerated("'2023-03-26 00:02:04.134516'::timestamp without time zone")) @db.Timestamp(6)
-  updatedAt DateTime    @db.Timestamp(6)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   alarms    alarms[]
   comments  comments[]
   favorites favorites[]
