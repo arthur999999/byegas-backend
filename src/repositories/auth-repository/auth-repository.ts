@@ -7,7 +7,6 @@ async function postNewUser(body: newUser) {
             name: body.name,
             email: body.email,
             password: body.password,
-            createdAt: body.createdAt,
             updatedAt: body.updatedAt,
         }
     })

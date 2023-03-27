@@ -5,4 +5,4 @@ export type error = {
     message: string
 };
 
-export type newUser = Omit< users, "id"  >
+export type newUser = Omit< users, "id" | "createdAt" >

@@ -22,7 +22,6 @@ export async function registerNewUser(newUser) {
         name: newUser.name,
         email: newUser.email,
         password: bcrypt.hashSync(newUser.password, 10),
-        createdAt: new Date(),
         updatedAt: new Date()
     }
     
