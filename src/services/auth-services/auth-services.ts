@@ -1,8 +1,9 @@
-import { credentialInvalid, emailExist, emailNotFound, invalidInfo, noMatchPasswords } from "./error.js";
-import { signinSchema, signupSchema } from "../../schemas/authSchema.js";
-import { authRepository } from "../../repositories/auth-repository/auth-repository.js";
+import { credentialInvalid } from "./error.js";
+import { userRepository } from "../../repositories/user-repository/user-repository.js";
 import { newUser } from "../../protocols.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { sessionRepository } from "../../repositories/session-repository/index.js";
 
 
 async function createUser(newUser) {
@@ -12,7 +13,7 @@ async function createUser(newUser) {
         password: bcrypt.hashSync(newUser.password, 10),
         updatedAt: new Date()
     }
-    await authRepository.postNewUser(user);
+    await userRepository.postNewUser(user);
     return;
 }
 
@@ -23,8 +24,14 @@ async function validatePassword(password: string, cryptPassword: string) {
     }
 }
 
+async function createSession(userId: number) {
+    const token = jwt.sign({userId}, process.env.JWT_SECRET)
+    await sessionRepository.createSession(token, userId)
+    return token
+}
+
 async function findUserEmail(email: string) {
-    const findEmail =  await authRepository.findUserByEmail(email)
+    const findEmail =  await userRepository.findUserByEmail(email)
     return findEmail
 }
 
@@ -32,5 +39,6 @@ async function findUserEmail(email: string) {
 export const authService = {
     findUserEmail,
     createUser,
-    validatePassword
+    validatePassword,
+    createSession
 } 

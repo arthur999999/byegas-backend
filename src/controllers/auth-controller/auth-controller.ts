@@ -33,13 +33,14 @@ export async function loginUser(req: Request, res: Response) {
     const user = req.body
 
     try {
-        
         const userSearch = await authService.findUserEmail(user.email)
+
         if(!userSearch) {
             throw emailNotFound();
         }
         await authService.validatePassword(user.password, userSearch.password)
-        res.sendStatus(200);
+        const token = await authService.createSession(userSearch.id)
+        res.status(200).send(token);
     } catch (error) {
         if(error.name == "emailNotFound"){
             res.status(404).send(error.message)
