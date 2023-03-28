@@ -20,6 +20,7 @@ async function findUserByEmail(email: string) {
     })
 }
 
+
 export const authRepository = {
     postNewUser,
     findUserByEmail
