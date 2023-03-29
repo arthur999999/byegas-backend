@@ -1,5 +1,7 @@
-import app from "./app.js";
+import app, { init } from "./app";
 
-app.listen(4000, () => {
-    console.log("server on")
+init().then(() => {
+    app.listen(4000, () => {
+        console.log("server on")
+    })
 })

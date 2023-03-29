@@ -1,9 +1,9 @@
-import { credentialInvalid } from "./error.js";
-import { userRepository } from "../../repositories/user-repository/user-repository.js";
-import { newUser } from "../../protocols.js";
+import { credentialInvalid } from "./error";
+import { userRepository } from "../../repositories/user-repository/user-repository";
+import { newUser } from "../../protocols";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { sessionRepository } from "../../repositories/session-repository/index.js";
+import { sessionRepository } from "../../repositories/session-repository/index";
 
 
 async function createUser(newUser) {

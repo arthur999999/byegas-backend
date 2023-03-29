@@ -1,6 +1,6 @@
-import { authService } from "../../services/auth-services/auth-services.js";
+import { authService } from "../../services/auth-services/auth-services";
 import { Request, Response } from "express";
-import { emailExist, emailNotFound, noMatchPasswords } from "../../services/auth-services/error.js";
+import { emailExist, emailNotFound, noMatchPasswords } from "../../services/auth-services/error";
 
 export async function registerUser(req: Request, res: Response) {
 

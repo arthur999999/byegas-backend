@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
-  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test jest --passWithNoTests --runInBand",
+    "test:migration:run": "npm run test:load-envs prisma migrate deploy",
+    "test:migration:generate": "npm run test:load-envs prisma migrate dev",
+    "test:load-envs": "dotenv -e .env.test"
   },
   "keywords": [],
   "author": "Arthur Honorato Pereira",
@@ -23,12 +25,20 @@
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.0",
     "@types/jsonwebtoken": "^9.0.1",
+    "@types/supertest": "^2.0.12",
+    "dotenv-cli": "^7.1.0",
+    "faker": "^6.6.6",
+    "jest": "^29.5.0",
     "nodemon": "^2.0.22",
     "prisma": "^4.11.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "^5.0.2",
