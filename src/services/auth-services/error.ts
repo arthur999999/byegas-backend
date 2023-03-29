@@ -1,11 +1,4 @@
-import { error } from "../../protocols";
-
-export function invalidInfo(error: string): error {
-    return {
-        name: "invalidInfo",
-        message: error
-    }
-}
+import { error } from "@/protocols";
 
 export function noMatchPasswords(): error {
     return {

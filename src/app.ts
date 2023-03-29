@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { authRouter } from "./routes/auth-route/auth-route";
+import { authRouter } from "./routes/auth-route";
 import { connectDb, disconnectDB } from "./config/database";
 
 const app = express();
