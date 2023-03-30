@@ -1,9 +1,14 @@
 import { prisma } from "@/config/database";
 
-async function getAllChainsAndTokens() {
+async function getAllChainsAndTokens(userId: number) {
     return prisma.chains.findMany({
         include: {
-            tokens: true
+            tokens: true,
+            favorites: {
+                where: {
+                    userId: userId,
+                }
+            }
         }
     })
 }
