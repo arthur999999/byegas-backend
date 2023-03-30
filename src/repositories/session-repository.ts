@@ -1,4 +1,4 @@
-import { prisma } from "../../config/database"
+import { prisma } from "../config/database"
 
 async function createSession(token: string, userId: number) {
     return prisma.sessions.create({

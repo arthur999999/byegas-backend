@@ -1,5 +1,5 @@
-import { prisma } from "../../config/database";
-import { newUser } from "../../protocols";
+import { prisma } from "../config/database";
+import { newUser } from "../protocols";
 
 async function postNewUser(body: newUser) {
     return prisma.users.create({

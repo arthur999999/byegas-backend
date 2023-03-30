@@ -1,9 +1,8 @@
 import { credentialInvalid } from "./error";
-import { userRepository } from "../../repositories/user-repository/user-repository";
+import { userRepository, sessionRepository } from "@/repositories";
 import { newUser } from "../../protocols";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { sessionRepository } from "../../repositories/session-repository/index";
 
 
 async function createUser(newUser) {

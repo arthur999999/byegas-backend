@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { authRouter } from "./routes/auth-route";
+import { authRouter, chainRouter  } from "@/routes";
 import { connectDb, disconnectDB } from "./config/database";
 
 const app = express();
@@ -12,7 +12,8 @@ app
     .get('/health', (req, res) => {
         res.send('OK');
     })
-    .use('/auth', authRouter);
+    .use('/auth', authRouter)
+    .use('/chains', chainRouter);
 
 export function init() {
     connectDb();
