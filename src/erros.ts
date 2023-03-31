@@ -6,3 +6,10 @@ export function invalidInfo(error: string): error {
         message: error
     }
 }
+
+export function notFoundError(message: string): error {
+    return {
+        name: "NotFoundError",
+        message: message
+    }
+}

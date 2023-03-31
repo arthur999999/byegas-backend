@@ -9,8 +9,7 @@ module.exports = {
   setupFiles: ["<rootDir>/tests/setup-envs.ts"],
   moduleNameMapper: {
     "@/(.*)": "<rootDir>/src/$1",
-    "@test/(.*)": "<rootDir>/tests/$1",
-    "axios": "axios/dist/node/axios.cjs"
+    "@test/(.*)": "<rootDir>/tests/$1"
   },
   restoreMocks: true,
 }

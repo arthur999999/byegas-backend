@@ -1,9 +1,13 @@
+import { notFoundError } from "@/erros";
 import { chainsRepository } from "@/repositories";
 import { chains, favorites, tokens } from "@prisma/client";
 import axios from "axios";
 
 async function getAllChainsWithTokens(userId) {
     const listChains = await chainsRepository.getAllChainsAndTokens(userId)
+    if(!listChains[0]) {
+        throw notFoundError("Not found chains");
+    }
     return listChains
 }
 
@@ -27,7 +31,7 @@ async function getGasPrice(list: (chains & { tokens: tokens[]; favorites: favori
 
         const dataStructured = structureData(data, list[i].name)
         
-        gasPriceList.push({ name: list[i].name, dataStructured, favorite: list[i].favorites[0] ? true : false })
+        gasPriceList.push({ name: list[i].name, dataStructured, favorite: list[i].favorites[0] ? true : false , image: list[i].image, id: list[i].id})
     }
 
     return gasPriceList
@@ -43,7 +47,7 @@ async function tokenPrice(link: string) {
     return response.data
 }
 
-function structureData(data, name: string){
+export function structureData(data, name: string){
     if( name === "Arbitrum") {
         const hexData = parseInt(data.dataGas.result.split('x')[1], 16)
         return {
@@ -55,6 +59,10 @@ function structureData(data, name: string){
         gwei: data.dataGas.result.FastGasPrice * 21000,
         usd: ((data.dataGas.result.FastGasPrice * 21000) / 1000000000) * data.priceToken  
     }
+}
+
+function organizeInCrescentSequence() {
+    
 }
 
 export const chainsService = {

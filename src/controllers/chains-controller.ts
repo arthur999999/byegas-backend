@@ -10,6 +10,10 @@ export async function listChains(req: AuthenticatedRequest, res: Response ) {
         const resp = await chainsService.getGasPrice(list)
         res.status(200).send(resp)
     } catch (error) {
+        if(error.name === "NotFoundError") {
+            res.status(404).send(error.message)
+            return
+        }
         res.status(400).send(error.message)
     }
 }
