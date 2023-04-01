@@ -14,24 +14,8 @@ async function getAllChainsWithTokens(userId) {
 async function getGasPrice(list: (chains & { tokens: tokens[]; favorites: favorites[] })[]) {
     const gasPriceList = []
     for(let i = 0; list.length > i ; i++) {
-        const dataGas = await gasGetApi(list[i].apiGas)
-        let priceToken
-        if(list[i].name !== "Polygon" && list[i].name !== "Arbitrum") {
-            const resp = await tokenPrice(list[i].tokens[0].apiToken);
-            priceToken = resp.market_data.current_price.usd
-        }else if(list[i].name === "Arbitrum"){
-            const resp = await tokenPrice("https://api.coingecko.com/api/v3/coins/ethereum");
-            priceToken = resp.market_data.current_price.usd
-        }else{
-            priceToken = dataGas.result.UsdPrice
-        }
-        const data = {
-            dataGas, priceToken
-        }
-
-        const dataStructured = structureData(data, list[i].name)
-        
-        gasPriceList.push({ name: list[i].name, dataStructured, favorite: list[i].favorites[0] ? true : false , image: list[i].image, id: list[i].id})
+      const chain = await getGasAndPriceToken(list[i])
+      gasPriceList.push(chain)
     }
 
     return gasPriceList
@@ -40,6 +24,27 @@ async function getGasPrice(list: (chains & { tokens: tokens[]; favorites: favori
 async function gasGetApi(link: string){
     const response = await axios.get(`${link}`)
     return response.data
+}
+
+async function getGasAndPriceToken(chain){
+    const dataGas = await gasGetApi(chain.apiGas)
+    let priceToken
+    if(chain.name !== "Polygon" && chain.name !== "Arbitrum") {
+        const resp = await tokenPrice(chain.tokens[0].apiToken);
+        priceToken = resp.market_data.current_price.usd
+    }else if(chain.name === "Arbitrum"){
+        const resp = await tokenPrice("https://api.coingecko.com/api/v3/coins/ethereum");
+        priceToken = resp.market_data.current_price.usd
+    }else{
+        priceToken = dataGas.result.UsdPrice
+    }
+    const data = {
+        dataGas, priceToken
+    }
+
+    const dataStructured = structureData(data, chain.name)
+    
+    return({ name: chain.name, dataStructured, favorite: chain.favorites[0] ? true : false , image: chain.image, id: chain.id})
 }
 
 async function tokenPrice(link: string) {
@@ -61,11 +66,26 @@ export function structureData(data, name: string){
     }
 }
 
-function organizeInCrescentSequence() {
-    
+function organizeInCrescentSequence(list) {
+    const organizedList = []
+    const repit = list.length
+    while(organizedList.length < repit) {
+        let smaller = Number.POSITIVE_INFINITY
+        let smallerObject
+        for(let i = 0; list.length > i ; i++) {
+            if(list[i].dataStructured.usd < smaller) {
+                smallerObject = i
+                smaller = list[i].dataStructured.usd
+            }
+        }
+        organizedList.push(list[smallerObject])
+        list.splice(smallerObject, 1)    
+    }
+    return organizedList
 }
 
 export const chainsService = {
     getAllChainsWithTokens,
-    getGasPrice
+    getGasPrice,
+    organizeInCrescentSequence
 }

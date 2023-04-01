@@ -7,7 +7,8 @@ export async function listChains(req: AuthenticatedRequest, res: Response ) {
 
     try {
         const list = await chainsService.getAllChainsWithTokens(userId)
-        const resp = await chainsService.getGasPrice(list)
+        const dataList = await chainsService.getGasPrice(list)
+        const resp = chainsService.organizeInCrescentSequence(dataList);
         res.status(200).send(resp)
     } catch (error) {
         if(error.name === "NotFoundError") {
@@ -16,4 +17,8 @@ export async function listChains(req: AuthenticatedRequest, res: Response ) {
         }
         res.status(400).send(error.message)
     }
+}
+
+export async function getSpecificChain() {
+
 }
