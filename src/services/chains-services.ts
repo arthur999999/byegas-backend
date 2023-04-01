@@ -11,10 +11,18 @@ async function getAllChainsWithTokens(userId) {
     return listChains
 }
 
+async function getAChain(chainId: number, userId: number) {
+    const chain = await chainsRepository.getChain(chainId, userId)
+    if(!chain) {
+        throw notFoundError("Not found chains");
+    }
+    return chain
+}
+
 async function getGasPrice(list: (chains & { tokens: tokens[]; favorites: favorites[] })[]) {
     const gasPriceList = []
     for(let i = 0; list.length > i ; i++) {
-      const chain = await getGasAndPriceToken(list[i])
+      const chain = await getGasAndPriceToken(list[i], true)
       gasPriceList.push(chain)
     }
 
@@ -26,7 +34,7 @@ async function gasGetApi(link: string){
     return response.data
 }
 
-async function getGasAndPriceToken(chain){
+async function getGasAndPriceToken(chain, isList: boolean){
     const dataGas = await gasGetApi(chain.apiGas)
     let priceToken
     if(chain.name !== "Polygon" && chain.name !== "Arbitrum") {
@@ -42,9 +50,13 @@ async function getGasAndPriceToken(chain){
         dataGas, priceToken
     }
 
-    const dataStructured = structureData(data, chain.name)
+    const dataStructured = structureData(data, chain.name, isList)
     
-    return({ name: chain.name, dataStructured, favorite: chain.favorites[0] ? true : false , image: chain.image, id: chain.id})
+    if(isList) {
+        return({ name: chain.name, dataStructured, favorite: chain.favorites[0] ? true : false , image: chain.image, id: chain.id})
+    }
+
+    return({ name: chain.name, dataStructured, favorite: chain.favorites[0] ? true : false , image: chain.image, id: chain.id, comments: chain.comments, alarm: chain.alarms})
 }
 
 async function tokenPrice(link: string) {
@@ -52,12 +64,44 @@ async function tokenPrice(link: string) {
     return response.data
 }
 
-export function structureData(data, name: string){
+export function structureData(data, name: string, isList: boolean){
     if( name === "Arbitrum") {
         const hexData = parseInt(data.dataGas.result.split('x')[1], 16)
+        if(!isList) {
+            return {
+                Standart: {
+                    gwei: hexData/1000000000 * 21000,
+                    usd: ((hexData/1000000000)/1000000000) * data.priceToken * 21000
+                },
+                Fast: {
+                    gwei: hexData/1000000000 * 21000,
+                    usd: ((hexData/1000000000)/1000000000) * data.priceToken * 21000
+                },
+                Rapid: {
+                    gwei: hexData/1000000000 * 21000,
+                    usd: ((hexData/1000000000)/1000000000) * data.priceToken * 21000
+                }
+            }
+        }
         return {
             gwei: hexData/1000000000 * 21000,
             usd: ((hexData/1000000000)/1000000000) * data.priceToken * 21000
+        }
+    }
+    if(!isList){
+        return {
+            Standart: {
+                gwei: data.dataGas.result.SafeGasPrice * 21000,
+                usd: ((data.dataGas.result.SafeGasPrice * 21000) / 1000000000) * data.priceToken
+            },
+            Fast: {
+                gwei: data.dataGas.result.ProposeGasPrice * 21000,
+                usd: ((data.dataGas.result.ProposeGasPrice * 21000) / 1000000000) * data.priceToken
+            },
+            Rapid: {
+                gwei: data.dataGas.result.FastGasPrice * 21000,
+                usd: ((data.dataGas.result.FastGasPrice * 21000) / 1000000000) * data.priceToken
+            }
         }
     }
     return {
@@ -87,5 +131,7 @@ function organizeInCrescentSequence(list) {
 export const chainsService = {
     getAllChainsWithTokens,
     getGasPrice,
-    organizeInCrescentSequence
+    organizeInCrescentSequence,
+    getAChain,
+    getGasAndPriceToken
 }

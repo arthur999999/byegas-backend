@@ -19,6 +19,20 @@ export async function listChains(req: AuthenticatedRequest, res: Response ) {
     }
 }
 
-export async function getSpecificChain() {
+export async function getSpecificChain(req: AuthenticatedRequest, res: Response ) {
+    const { userId } = req
+    const chainId = req.params.chainId
 
+    try {
+        const chain = await chainsService.getAChain(Number(chainId), userId);
+        const resp = await chainsService.getGasAndPriceToken(chain, false)
+
+        res.status(200).send(resp)
+    } catch (error) {
+        if(error.name === "NotFoundError") {
+            res.status(404).send(error.message)
+            return
+        }
+        res.status(400).send(error.message)
+    }
 }

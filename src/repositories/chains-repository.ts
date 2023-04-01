@@ -13,6 +13,29 @@ async function getAllChainsAndTokens(userId: number) {
     })
 }
 
+async function getChain(chainId: number, userId: number) {
+    return prisma.chains.findUnique({
+        where: {
+            id: chainId
+        },
+        include: {
+            tokens: true,
+            favorites: {
+                where: {
+                    userId: userId,
+                }
+            },
+            comments: true,
+            alarms: {
+                where: {
+                    userId: userId
+                }
+            }
+        }
+    })
+}
+
 export const chainsRepository = {
-    getAllChainsAndTokens
+    getAllChainsAndTokens,
+    getChain
 }
