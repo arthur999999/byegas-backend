@@ -36,3 +36,20 @@ export async function getSpecificChain(req: AuthenticatedRequest, res: Response 
         res.status(400).send(error.message)
     }
 }
+
+export async function getFavoritesChains(req: AuthenticatedRequest, res: Response) {
+    const { userId } = req
+    try {
+        const list = await chainsService.getFavorites(userId)
+        const dataList = await chainsService.getGasPrice(list)
+        const resp = chainsService.organizeInCrescentSequence(dataList);
+
+        res.status(200).send(resp)
+    } catch (error) {
+        if(error.name === "NotFoundError") {
+            res.status(404).send(error.message)
+            return
+        }
+        res.status(400).send(error.message)
+    }
+}

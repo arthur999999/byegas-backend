@@ -11,6 +11,18 @@ async function getAllChainsWithTokens(userId) {
     return listChains
 }
 
+async function getFavorites(userId: number) {
+    const list = await chainsRepository.getFavoriteChains(userId)
+    const realList = []
+    if(!list[0]) {
+        throw notFoundError("Not found chains");
+    }
+    list.forEach((m) => {
+        realList.push(m.chains);
+    })
+    return realList
+}
+
 async function getAChain(chainId: number, userId: number) {
     const chain = await chainsRepository.getChain(chainId, userId)
     if(!chain) {
@@ -133,5 +145,6 @@ export const chainsService = {
     getGasPrice,
     organizeInCrescentSequence,
     getAChain,
-    getGasAndPriceToken
+    getGasAndPriceToken,
+    getFavorites
 }
