@@ -45,4 +45,15 @@ export async function createChains() {
             }
         ]
     })
+
+    return [chainsEthereum, chainsArbitrum, chainsPolygon]
+}
+
+export async function createFavoriteChain(userId: number, chainId: number) {
+    return prisma.favorites.create({
+        data: {
+            userId: userId,
+            chainId: chainId
+        }
+    })
 }

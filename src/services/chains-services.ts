@@ -3,7 +3,7 @@ import { chainsRepository } from "@/repositories";
 import { chains, favorites, tokens } from "@prisma/client";
 import axios from "axios";
 
-async function getAllChainsWithTokens(userId) {
+async function getAllChainsWithTokens(userId: number) {
     const listChains = await chainsRepository.getAllChainsAndTokens(userId)
     if(!listChains[0]) {
         throw notFoundError("Not found chains");
