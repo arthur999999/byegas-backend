@@ -1,4 +1,4 @@
-import { getFavoritesChains, getSpecificChain, listChains } from "@/controllers";
+import { getFavoritesChains, getSpecificChain, listChains, postFavoriteChain } from "@/controllers";
 import { validateToken } from "@/middlewares";
 import { Router } from "express";
 
@@ -8,6 +8,7 @@ chainRouter
     .all("/*", validateToken)
     .get('/list/all', listChains)
     .get('/listone/:chainId', getSpecificChain)
-    .get('/favorites', getFavoritesChains);
+    .get('/favorites', getFavoritesChains)
+    .post('/favorite/:chainId', postFavoriteChain);
 
 export { chainRouter };

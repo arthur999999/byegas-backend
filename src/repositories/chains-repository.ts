@@ -55,8 +55,28 @@ async function getChain(chainId: number, userId: number) {
     })
 }
 
+async function createFavorite(userId: number, chainId: number){
+    return prisma.favorites.create({
+        data:{
+            userId: userId,
+            chainId: chainId
+        }
+    })
+}
+
+async function findFavorite(userId: number, chainId: number) {
+    return prisma.favorites.findFirst({
+        where:{
+            userId: userId,
+            chainId: chainId
+        }
+    })
+}
+
 export const chainsRepository = {
     getAllChainsAndTokens,
     getChain,
-    getFavoriteChains
+    getFavoriteChains,
+    createFavorite,
+    findFavorite
 }

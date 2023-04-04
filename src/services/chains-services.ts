@@ -1,4 +1,4 @@
-import { notFoundError } from "@/erros";
+import { conflitError, notFoundError } from "@/erros";
 import { chainsRepository } from "@/repositories";
 import { chains, favorites, tokens } from "@prisma/client";
 import axios from "axios";
@@ -140,11 +140,24 @@ function organizeInCrescentSequence(list) {
     return organizedList
 }
 
+async function verifyFavoriteExist(userId: number, chainId: number) {
+    const favorite = await chainsRepository.findFavorite(userId, chainId);
+    if(favorite) {
+        throw conflitError();
+    }
+}
+
+async function postChainFavorite(userId: number, chainId: number) {
+    return await chainsRepository.createFavorite(userId, chainId)
+}
+
 export const chainsService = {
     getAllChainsWithTokens,
     getGasPrice,
     organizeInCrescentSequence,
     getAChain,
     getGasAndPriceToken,
-    getFavorites
+    getFavorites,
+    postChainFavorite,
+    verifyFavoriteExist
 }

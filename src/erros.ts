@@ -13,3 +13,10 @@ export function notFoundError(message: string): error {
         message: message
     }
 }
+
+export function conflitError(): error {
+    return {
+        name: "ConflictError",
+        message: "conflict"
+    }
+}
