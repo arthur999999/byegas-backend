@@ -73,10 +73,19 @@ async function findFavorite(userId: number, chainId: number) {
     })
 }
 
+async function deleteFavorite(id: number) {
+    return prisma.favorites.delete({
+        where:{
+            id: id
+        }
+    })
+}
+
 export const chainsRepository = {
     getAllChainsAndTokens,
     getChain,
     getFavoriteChains,
     createFavorite,
-    findFavorite
+    findFavorite,
+    deleteFavorite
 }

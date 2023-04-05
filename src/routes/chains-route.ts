@@ -1,4 +1,4 @@
-import { getFavoritesChains, getSpecificChain, listChains, postFavoriteChain } from "@/controllers";
+import { deleteFavorite, getFavoritesChains, getSpecificChain, listChains, postFavoriteChain } from "@/controllers";
 import { validateToken } from "@/middlewares";
 import { Router } from "express";
 
@@ -9,6 +9,7 @@ chainRouter
     .get('/list/all', listChains)
     .get('/listone/:chainId', getSpecificChain)
     .get('/favorites', getFavoritesChains)
-    .post('/favorite/:chainId', postFavoriteChain);
+    .post('/favorite/:chainId', postFavoriteChain)
+    .delete('/favorite/:chainId', deleteFavorite);
 
 export { chainRouter };

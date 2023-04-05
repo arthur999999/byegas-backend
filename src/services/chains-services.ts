@@ -141,10 +141,12 @@ function organizeInCrescentSequence(list) {
 }
 
 async function verifyFavoriteExist(userId: number, chainId: number) {
-    const favorite = await chainsRepository.findFavorite(userId, chainId);
-    if(favorite) {
-        throw conflitError();
-    }
+     return await chainsRepository.findFavorite(userId, chainId);
+    
+}
+
+async function deleteFavorite(id: number) {
+    chainsRepository.deleteFavorite(id);
 }
 
 async function postChainFavorite(userId: number, chainId: number) {
@@ -159,5 +161,6 @@ export const chainsService = {
     getGasAndPriceToken,
     getFavorites,
     postChainFavorite,
-    verifyFavoriteExist
+    verifyFavoriteExist,
+    deleteFavorite
 }

@@ -1,3 +1,4 @@
+import { conflitError, notFoundError } from "@/erros";
 import { AuthenticatedRequest } from "@/middlewares";
 import { chainsService } from "@/services";
 import { Response } from "express";
@@ -59,9 +60,12 @@ export async function postFavoriteChain(req: AuthenticatedRequest, res: Response
     const chainId = Number(req.params.chainId)
     try {
         await chainsService.getAChain(chainId, userId)
-        await chainsService.verifyFavoriteExist(userId, chainId)
+        const favorite = await chainsService.verifyFavoriteExist(userId, chainId)
+        if(favorite) {
+            throw conflitError();
+        }
         await chainsService.postChainFavorite(userId, chainId)
-        res.sendStatus(200)
+        res.sendStatus(201)
 
     } catch (error) {
         if(error.name === "NotFoundError") {
@@ -70,6 +74,25 @@ export async function postFavoriteChain(req: AuthenticatedRequest, res: Response
         }
         if(error.name == "ConflictError") {
             res.status(406).send(error.message)
+            return
+        }
+        res.status(400).send(error.message)
+    }
+}
+
+export async function deleteFavorite(req: AuthenticatedRequest, res: Response) {
+    const { userId } = req
+    const chainId = Number(req.params.chainId)
+    try {
+        const favorite = await chainsService.verifyFavoriteExist(userId, chainId)
+        if(!favorite) {
+            throw notFoundError("this user dont have a favorite chain with this id");
+        }
+        await chainsService.deleteFavorite(favorite.id);
+        res.sendStatus(200)
+    } catch (error) {
+        if(error.name === "NotFoundError") {
+            res.status(404).send(error.message)
             return
         }
         res.status(400).send(error.message)
