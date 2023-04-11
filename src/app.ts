@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { authRouter, chainRouter  } from "@/routes";
 import { connectDb, disconnectDB } from "./config/database";
+import alarmsRoute from "./routes/alarms-route";
 
 const app = express();
 
@@ -13,7 +14,8 @@ app
         res.send('OK');
     })
     .use('/auth', authRouter)
-    .use('/chains', chainRouter);
+    .use('/chains', chainRouter)
+    .use('/alarms', alarmsRoute);
 
 export function init() {
     connectDb();
