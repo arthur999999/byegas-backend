@@ -1,2 +1,5 @@
 export * from "./auth-controller"
 export * from "./chains-controller"
+export * from "./alarms-controller"
+export * from "./telegram-contoller"
+export * from "./comments-controller"

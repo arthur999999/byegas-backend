@@ -26,7 +26,7 @@ async function getFavorites(userId: number) {
 async function getAChain(chainId: number, userId: number) {
     const chain = await chainsRepository.getChain(chainId, userId)
     if(!chain) {
-        throw notFoundError("Not found chains");
+        throw notFoundError("Not found chain");
     }
     return chain
 }

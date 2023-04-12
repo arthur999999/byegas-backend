@@ -3,6 +3,8 @@ import cors from "cors";
 import { authRouter, chainRouter  } from "@/routes";
 import { connectDb, disconnectDB } from "./config/database";
 import alarmsRoute from "./routes/alarms-route";
+import telegramRoute from "./routes/telegram-route";
+import commentsRoute from "./routes/comments-route";
 
 const app = express();
 
@@ -15,7 +17,9 @@ app
     })
     .use('/auth', authRouter)
     .use('/chains', chainRouter)
-    .use('/alarms', alarmsRoute);
+    .use('/alarms', alarmsRoute)
+    .use('/telegram', telegramRoute)
+    .use('/comments', commentsRoute);
 
 export function init() {
     connectDb();
