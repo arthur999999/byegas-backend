@@ -28,8 +28,17 @@ async function updateTelegram(id: number, userTelegram: string) {
     })
 }
 
+async function findTelegram(token: string) {
+    return prisma.telegram.findFirst({
+        where: {
+            userTelegram: token
+        }
+    })
+}
+
 export const telegramRepository = {
     getTelegramByUserId,
     createTelegram,
-    updateTelegram
+    updateTelegram,
+    findTelegram
 }
