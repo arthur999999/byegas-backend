@@ -29,6 +29,6 @@ export async function  verifyPrices() {
             alarms = await alarmsRepositories.getListAlarms()
             
         })
-    }, alarms.length * 6000)
+    }, alarms.length+1 * 5000)
     
 }
