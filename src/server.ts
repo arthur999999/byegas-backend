@@ -7,6 +7,6 @@ init().then(() => {
         console.log("server on")
     })
     bot.launch()
+    verifyPrices()
 })
 
-setInterval(verifyPrices, 1000)

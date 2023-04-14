@@ -41,7 +41,12 @@ bot.command('register', (ctx) => {
 
 export async function sendMenssage(chatId: number, message: string, alarmId: number) {
     bot.telegram.sendMessage(chatId, message)
-    await alarmsRepositories.deleteAlarm(alarmId);
+    try {
+        await alarmsRepositories.deleteAlarm(alarmId);
+    } catch (error) {
+        return error
+    }
+    
 }
 
   
