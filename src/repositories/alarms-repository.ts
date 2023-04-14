@@ -13,6 +13,10 @@ async function getAllAlarms(userId: number) {
     })
 }
 
+async function  getListAlarms() {
+    return prisma.alarms.findMany()
+}
+
 async function getAlarmPrice(inGwei: boolean, chainId: number) {
     return prisma.alarms.findMany({
         where: {
@@ -40,8 +44,18 @@ async function createOrUpdateAlarms(userId: number, chainId: number, body: Omit<
     })
 }
 
+async function deleteAlarm(id: number) {
+    return prisma.alarms.delete({
+        where: {
+            id: id
+        }
+    })
+}
+
 export const alarmsRepositories = {
     getAllAlarms,
     createOrUpdateAlarms,
-    getAlarmPrice
+    getAlarmPrice,
+    getListAlarms,
+    deleteAlarm
 }

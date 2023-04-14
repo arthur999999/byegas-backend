@@ -1,4 +1,5 @@
 import app, { init } from "@/app";
+import { verifyPrices } from "./alarmsTrigger";
 import bot from "./botTelegraf";
 
 init().then(() => {
@@ -7,3 +8,5 @@ init().then(() => {
     })
     bot.launch()
 })
+
+setInterval(verifyPrices, 1000)

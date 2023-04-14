@@ -1,4 +1,6 @@
 import { Telegraf } from "telegraf";
+import { verifyPrices } from "./alarmsTrigger";
+import { alarmsRepositories } from "./repositories";
 import { telegramService } from "./services";
 
 const bot = new Telegraf(process.env.TOKEN_BOT)
@@ -34,5 +36,13 @@ bot.command('register', (ctx) => {
     
     
 })
+
+
+
+export async function sendMenssage(chatId: number, message: string, alarmId: number) {
+    bot.telegram.sendMessage(chatId, message)
+    await alarmsRepositories.deleteAlarm(alarmId);
+}
+
   
 export default bot
