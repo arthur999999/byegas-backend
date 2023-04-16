@@ -45,7 +45,16 @@ async function getChain(chainId: number, userId: number) {
                     userId: userId,
                 }
             },
-            comments: true,
+            comments: {
+                include:{
+                    users: {
+                        select:{
+                            name: true,
+                            image: true
+                        }
+                    },
+                }
+            },
             alarms: {
                 where: {
                     userId: userId
