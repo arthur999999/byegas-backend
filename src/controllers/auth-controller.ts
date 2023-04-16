@@ -42,7 +42,8 @@ export async function loginUser(req: Request, res: Response) {
         const token = await authService.createSession(userSearch.id)
         const resp = {
             name: userSearch.name,
-            token
+            token,
+            image: userSearch.image[0]
         }
         res.status(200).send(resp);
     } catch (error) {

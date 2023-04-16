@@ -16,6 +16,9 @@ async function findUserByEmail(email: string) {
     return prisma.users.findFirst({
         where: {
             email: email
+        },
+        include:{
+            image: true
         }
     })
 }
