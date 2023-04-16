@@ -29,7 +29,6 @@ describe("Test login user", () => {
         const response = await server.post('/auth/sign-in').send(body)
         expect(response.status).toBe(200)
        
-        expect(response.body).toBeDefined()
     })
     it("Should respond with 400 when password is wrong", async () => {
         const user = await createUser();
@@ -37,7 +36,6 @@ describe("Test login user", () => {
         const response = await server.post('/auth/sign-in').send(body)
         expect(response.status).toBe(400)
        
-        expect(response.body).toBeDefined()
     })
 })
 

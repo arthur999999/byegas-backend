@@ -40,7 +40,11 @@ export async function loginUser(req: Request, res: Response) {
         }
         await authService.validatePassword(user.password, userSearch.password)
         const token = await authService.createSession(userSearch.id)
-        res.status(200).send(token);
+        const resp = {
+            name: userSearch.name,
+            token
+        }
+        res.status(200).send(resp);
     } catch (error) {
         if(error.name == "emailNotFound"){
             res.status(404).send(error.message)
