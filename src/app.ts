@@ -5,6 +5,7 @@ import { connectDb, disconnectDB } from "./config/database";
 import alarmsRoute from "./routes/alarms-route";
 import telegramRoute from "./routes/telegram-route";
 import commentsRoute from "./routes/comments-route";
+import imageRoute from "./routes/image-router";
 
 const app = express();
 
@@ -19,7 +20,8 @@ app
     .use('/chains', chainRouter)
     .use('/alarms', alarmsRoute)
     .use('/telegram', telegramRoute)
-    .use('/comments', commentsRoute);
+    .use('/comments', commentsRoute)
+    .use('/image', imageRoute);
 
 export function init() {
     connectDb();
