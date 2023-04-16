@@ -43,7 +43,7 @@ export async function loginUser(req: Request, res: Response) {
         const resp = {
             name: userSearch.name,
             token,
-            image: userSearch.image[0]
+            image: userSearch.image[0].imageUrl
         }
         res.status(200).send(resp);
     } catch (error) {
