@@ -31,7 +31,7 @@ export async function postAlarm(req: AuthenticatedRequest, res: Response) {
             throw notFoundError("this chain not exist")
         }
         await alarmsService.createOrUpdateAlarm(userId, chainId, body)
-        res.sendStatus(200);
+        res.sendStatus(201);
     } catch (error) {
         if(error.name === "NotFoundError") {
             res.status(404).send(error.message)

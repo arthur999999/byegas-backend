@@ -59,7 +59,7 @@ describe("test GET all alarms", () => {
 })
 
 describe("test POST alarms", () => {
-    it("should response with 200 when create a new alarm", async () => {
+    it("should response with 201 when create a new alarm", async () => {
         const user = await createUser()
         const token = await createValidToken(user.prismaReturn.id)
         const chains = await createChains();
@@ -70,10 +70,10 @@ describe("test POST alarms", () => {
         }
 
         const response = await server.post(`/alarms/${chains[0].id}`).set("Authorization", `Bearer ${token}`).send(body)
-        expect(response.status).toBe(200)
+        expect(response.status).toBe(201)
     })
 
-    it("should response with 200 and update a alarm", async () => {
+    it("should response with 201 and update a alarm", async () => {
         const user = await createUser()
         const token = await createValidToken(user.prismaReturn.id)
         const chains = await createChains();
@@ -86,7 +86,7 @@ describe("test POST alarms", () => {
         }
 
         const response = await server.post(`/alarms/${chains[0].id}`).set("Authorization", `Bearer ${token}`).send(body)
-        expect(response.status).toBe(200)
+        expect(response.status).toBe(201)
     })
 
     it("should be response with 404 and chain not exist", async () => {
