@@ -40,10 +40,14 @@ export async function loginUser(req: Request, res: Response) {
         }
         await authService.validatePassword(user.password, userSearch.password)
         const token = await authService.createSession(userSearch.id)
+        let image = undefined
+        if(userSearch.image[0].imageUrl){
+            image = userSearch.image[0].imageUrl
+        }
         const resp = {
             name: userSearch.name,
             token,
-            image: userSearch.image[0].imageUrl
+            image: image
         }
         res.status(200).send(resp);
     } catch (error) {
