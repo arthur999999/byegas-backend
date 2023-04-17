@@ -41,7 +41,7 @@ export async function loginUser(req: Request, res: Response) {
         await authService.validatePassword(user.password, userSearch.password)
         const token = await authService.createSession(userSearch.id)
         let image = undefined
-        if(userSearch.image[0].imageUrl){
+        if(userSearch.image[0]){
             image = userSearch.image[0].imageUrl
         }
         const resp = {
