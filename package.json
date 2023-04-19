@@ -32,6 +32,7 @@
     "joi": "^17.9.1",
     "jsonwebtoken": "^9.0.0",
     "nanoid": "^4.0.2",
+    "redis": "^4.6.5",
     "telegraf": "^4.12.2"
   },
   "devDependencies": {

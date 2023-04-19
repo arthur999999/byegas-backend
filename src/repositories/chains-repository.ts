@@ -13,6 +13,10 @@ async function getAllChainsAndTokens(userId: number) {
     })
 }
 
+async function getOnlyChain() {
+    return prisma.chains.findMany({})
+}
+
 async function getFavoriteChains(userId: number) {
     return prisma.favorites.findMany({
         where: {
@@ -90,11 +94,17 @@ async function deleteFavorite(id: number) {
     })
 }
 
+async function getAllToken(){
+    return prisma.tokens.findMany({})
+}
+
 export const chainsRepository = {
     getAllChainsAndTokens,
     getChain,
     getFavoriteChains,
     createFavorite,
     findFavorite,
-    deleteFavorite
+    deleteFavorite,
+    getOnlyChain,
+    getAllToken
 }

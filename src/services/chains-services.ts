@@ -1,5 +1,6 @@
 import { conflitError, notFoundError } from "@/erros";
 import { chainsRepository } from "@/repositories";
+import client from "@/util/redis";
 import { chains, favorites, tokens } from "@prisma/client";
 import axios from "axios";
 
@@ -31,6 +32,8 @@ async function getAChain(chainId: number, userId: number) {
     return chain
 }
 
+//API
+
 async function getGasPrice(list: (chains & { tokens: tokens[]; favorites: favorites[] })[]) {
     const gasPriceList = []
     for(let i = 0; list.length > i ; i++) {
@@ -41,19 +44,27 @@ async function getGasPrice(list: (chains & { tokens: tokens[]; favorites: favori
     return gasPriceList
 }
 
-async function gasGetApi(link: string){
-    const response = await axios.get(`${link}`)
-    return response.data
+//Make this redis
+
+async function gasGetApi(name: string){
+    const info = await client.get(`gas${name}`)
+    if(!info){
+        throw notFoundError("No data Chain")
+    }
+    const response = JSON.parse(info)
+    return response
 }
 
+//Makes this redis
+
 async function getGasAndPriceToken(chain, isList: boolean){
-    const dataGas = await gasGetApi(chain.apiGas)
+    const dataGas = await gasGetApi(chain.name)
     let priceToken
     if(chain.name !== "Polygon" && chain.name !== "Arbitrum") {
-        const resp = await tokenPrice(chain.tokens[0].apiToken);
+        const resp = await tokenPrice(chain.tokens[0].name);
         priceToken = resp.market_data.current_price.usd
     }else if(chain.name === "Arbitrum"){
-        const resp = await tokenPrice("https://api.coingecko.com/api/v3/coins/ethereum");
+        const resp = await tokenPrice("ETH");
         priceToken = resp.market_data.current_price.usd
     }else{
         priceToken = dataGas.result.UsdPrice
@@ -71,9 +82,15 @@ async function getGasAndPriceToken(chain, isList: boolean){
     return({ name: chain.name, dataStructured, favorite: chain.favorites[0] ? true : false , image: chain.image, id: chain.id, comments: chain.comments, alarm: chain.alarms})
 }
 
-async function tokenPrice(link: string) {
-    const response = await axios.get(`${link}`)
-    return response.data
+//make this in redis
+
+async function tokenPrice(name: string) {
+    const info = await client.get(`price${name}`)
+    if(!info){
+        throw notFoundError("No data Token")
+    }
+    const response = JSON.parse(info)
+    return response
 }
 
 export function structureData(data, name: string, isList: boolean){
