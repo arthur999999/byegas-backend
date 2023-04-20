@@ -14,7 +14,7 @@ export async function getData(){
             console.log(error)
         }
         
-    },10000)
+    },15000)
     
 
 }
@@ -33,12 +33,18 @@ async function gasApi(chain : chains[]) {
 
 async function tokenApi(token: tokens[]){
     token.forEach(async(m) =>{
-        try {
-            const response = await axios.get(m.apiToken)
-            client.set(`price${m.name}`, JSON.stringify(response.data))
-        } catch (error) {
-            return
-        }
+
+       
+        setTimeout(async()=> {
+            try {
+                const response = await axios.get(m.apiToken)
+                client.set(`price${m.name}`, JSON.stringify(response.data))
+                
+            } catch (error) {
+                return
+            }
+        }, 5000)
+        
        
     })
 }

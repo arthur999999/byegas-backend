@@ -8,10 +8,9 @@ export async function  verifyPrices() {
     if(!alarms[0]){
         alarms = [ 1 ]
     }
-    setInterval(()=> {
+     setInterval(()=> {
         alarms.forEach(async(m, index) => {
             if(m !== 1){
-                setTimeout(async() => {
                     try {
                         const telegram = await telegramRepository.getTelegramByUserId(m.userId)
                         if(!telegram || telegram.userTelegram.length == 6){
@@ -26,7 +25,7 @@ export async function  verifyPrices() {
                                 await sendMenssage(Number(telegram.userTelegram), `Sound Alarm ${chain.name} gas = ${prices.dataStructured.Fast.gwei} Gwei`, m.id)
                             }
                         }else{
-                            if(prices.dataStructured.Fast.usd <= m.valueGas){
+                            if(prices.dataStructured.Fast.usd <= m.valueGas / 10000){
                                 await sendMenssage(Number(telegram.userTelegram),`Sound Alarm ${chain.name} gas = ${prices.dataStructured.Fast.usd.toFixed(6)} USD`, m.id)
                             }
                         }
@@ -34,7 +33,6 @@ export async function  verifyPrices() {
                         console.log(error)
                     }
                    
-                }, index*5000)
             }
             try {
                 alarms = await alarmsRepositories.getListAlarms()
@@ -46,6 +44,6 @@ export async function  verifyPrices() {
             }
             
         })
-    }, alarms.length+1 * 5000)
+    }, 5000)
     
 }
