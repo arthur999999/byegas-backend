@@ -38,8 +38,9 @@ async function tokenApi(token: tokens[]){
         setTimeout(async()=> {
             try {
                 const response = await axios.get(m.apiToken)
-                client.set(`price${m.name}`, JSON.stringify(response.data))
-                
+                if(response.data){
+                    client.set(`price${m.name}`, JSON.stringify(response.data))
+                }   
             } catch (error) {
                 return
             }

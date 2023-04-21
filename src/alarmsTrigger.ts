@@ -20,7 +20,7 @@ export async function  verifyPrices() {
                         const prices = await chainsService.getGasAndPriceToken(chain, false)
                         
                         if(m.inGwei){
-                            if(prices.dataStructured.Fast.gwei / 10000 <= m.valueGas){
+                            if(prices.dataStructured.Fast.gwei  <= m.valueGas){
                                 
                                 await sendMenssage(Number(telegram.userTelegram), `Sound Alarm ${chain.name} gas = ${prices.dataStructured.Fast.gwei} Gwei`, m.id)
                             }
