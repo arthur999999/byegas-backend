@@ -23,7 +23,9 @@ async function gasApi(chain : chains[]) {
     chain.forEach(async(m) =>{
         try {
             const response = await axios.get(m.apiGas)
-            client.set(`gas${m.name}`, JSON.stringify(response.data))
+            if(response.data){
+                client.set(`gas${m.name}`, JSON.stringify(response.data))
+            }  
         } catch (error) {
             return
         }
