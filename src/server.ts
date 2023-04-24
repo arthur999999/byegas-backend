@@ -4,7 +4,8 @@ import bot from "./botTelegraf";
 import { getData } from "./crypto data/getPrice";
 
 init().then(() => {
-    app.listen(4000, () => {
+    const port = process.env.SERVER_PORT
+    app.listen(port, () => {
         console.log("server on")
     })
     bot.launch()
