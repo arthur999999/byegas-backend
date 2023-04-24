@@ -1,5 +1,5 @@
-import { deleteFavorite, getFavoritesChains, getSpecificChain, listChains, postFavoriteChain } from "@/controllers";
-import { validateToken } from "@/middlewares";
+import { deleteFavorite, getFavoritesChains, getSpecificChain, listChains, postFavoriteChain } from "../controllers";
+import { validateToken } from "../middlewares";
 import { Router } from "express";
 
 const chainRouter = Router();

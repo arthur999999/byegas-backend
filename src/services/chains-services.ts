@@ -1,6 +1,6 @@
-import { conflitError, notFoundError } from "@/erros";
-import { chainsRepository } from "@/repositories";
-import client from "@/util/redis";
+import { conflitError, notFoundError } from "../erros";
+import { chainsRepository } from "../repositories";
+import client from "../util/redis";
 import { chains, favorites, tokens } from "@prisma/client";
 import axios from "axios";
 

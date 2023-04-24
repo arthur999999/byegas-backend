@@ -1,6 +1,5 @@
-import { notFoundError } from "@/erros";
-import { AuthenticatedRequest } from "@/middlewares";
-import { telegramService } from "@/services";
+import { AuthenticatedRequest } from "../middlewares";
+import { telegramService } from "../services";
 import { Response } from "express";
 
 export async function getUserTelegram(req: AuthenticatedRequest, res: Response) {

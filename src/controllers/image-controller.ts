@@ -1,5 +1,5 @@
-import { AuthenticatedRequest } from "@/middlewares";
-import { imageService } from "@/services";
+import { AuthenticatedRequest } from "../middlewares";
+import { imageService } from "../services";
 import { Response } from "express";
 
 export async  function postImage(req: AuthenticatedRequest, res: Response) {

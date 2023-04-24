@@ -1,5 +1,5 @@
-import { chainsRepository } from "@/repositories";
-import client from "@/util/redis";
+import { chainsRepository } from "../repositories";
+import client from "../util/redis";
 import { chains, tokens } from "@prisma/client";
 import axios from "axios";
 

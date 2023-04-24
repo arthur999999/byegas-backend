@@ -1,4 +1,4 @@
-import { alarmsRepositories } from "@/repositories/alarms-repository";
+import { alarmsRepositories } from "../repositories/alarms-repository";
 import { alarms } from "@prisma/client";
 
 async function listAllAlarms(userId: number) {

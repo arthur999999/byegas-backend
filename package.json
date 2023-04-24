@@ -2,23 +2,25 @@
   "name": "byegas-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "dist/app.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
+    "migration:run": "prisma migrate deploy",
+    "migration:generate": "prisma migrate reset --force",
     "test": "NODE_ENV=test jest --passWithNoTests --runInBand",
     "test:migration:run": "npm run test:load-envs prisma migrate deploy",
     "test:migration:generate": "npm run test:load-envs prisma migrate dev",
     "test:load-envs": "dotenv -e .env.test",
     "dev:load-envs": "dotenv -e .env.development",
-    "dev:seed": "npm run dev:load-envs prisma db seed",
+    "dev:seed": "prisma db seed",
     "dev": "NODE_ENV=development nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/server.ts' -e ts"
   },
   "keywords": [],
   "author": "Arthur Honorato Pereira",
   "license": "ISC",
   "prisma": {
-    "seed": "npm run dev:load-envs -- ts-node prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
@@ -55,6 +57,7 @@
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
+    "tsx": "^3.12.6",
     "typescript": "^5.0.2",
     "typescript-transform-paths": "^3.4.6"
   }

@@ -1,6 +1,6 @@
-import { conflitError, notFoundError } from "@/erros";
-import { AuthenticatedRequest } from "@/middlewares";
-import { chainsService } from "@/services";
+import { conflitError, notFoundError } from "../erros";
+import { AuthenticatedRequest } from "../middlewares";
+import { chainsService } from "../services";
 import { Response } from "express";
 
 export async function listChains(req: AuthenticatedRequest, res: Response ) {

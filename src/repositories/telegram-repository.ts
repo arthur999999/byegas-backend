@@ -1,4 +1,4 @@
-import { prisma } from "@/config/database";
+import { prisma } from "../config/database";
 
 async function getTelegramByUserId(userId: number) {
     return prisma.telegram.findFirst({

@@ -1,4 +1,4 @@
-import { error } from "@/protocols";
+import { error } from "../../protocols";
 
 export function noMatchPasswords(): error {
     return {

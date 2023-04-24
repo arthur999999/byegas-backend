@@ -1,6 +1,6 @@
-import { createComment } from "@/controllers";
-import { validateBody, validateToken } from "@/middlewares";
-import { commentSchema } from "@/schemas/commentSchema";
+import { createComment } from "../controllers";
+import { validateBody, validateToken } from "../middlewares";
+import { commentSchema } from "../schemas/commentSchema";
 import { Router } from "express";
 
 const commentsRoute = Router()

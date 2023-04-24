@@ -1,4 +1,4 @@
-import app, { init } from "@/app";
+import app, { init } from "./app";
 import { verifyPrices } from "./alarmsTrigger";
 import bot from "./botTelegraf";
 import { getData } from "./crypto data/getPrice";

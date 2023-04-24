@@ -1,4 +1,4 @@
-import { prisma } from "@/config/database";
+import { prisma } from "../config/database";
 import { alarms } from "@prisma/client";
 import { number } from "joi";
 

@@ -1,6 +1,5 @@
-import { notFoundError } from "@/erros";
-import { AuthenticatedRequest } from "@/middlewares";
-import { chainsService, commentsService } from "@/services";
+import { AuthenticatedRequest } from "../middlewares";
+import { chainsService, commentsService } from "../services";
 import { Response } from "express";
 
 export async function createComment(req: AuthenticatedRequest, res: Response) {

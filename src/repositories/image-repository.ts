@@ -1,4 +1,4 @@
-import { prisma } from "@/config/database";
+import { prisma } from "../config/database";
 
 async function createImage(userId:number, imageUrl: string, id: number){
     return prisma.image.upsert({

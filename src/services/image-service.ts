@@ -1,4 +1,4 @@
-import { imageRepository } from "@/repositories";
+import { imageRepository } from "../repositories";
 
 async function postImage(userId: number, imageUrl: string, id: number){
     await imageRepository.createImage(userId, imageUrl, id)

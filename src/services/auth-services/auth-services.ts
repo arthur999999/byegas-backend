@@ -1,5 +1,5 @@
 import { credentialInvalid } from "./error";
-import { userRepository, sessionRepository } from "@/repositories";
+import { userRepository, sessionRepository } from "../../repositories";
 import { newUser } from "../../protocols";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

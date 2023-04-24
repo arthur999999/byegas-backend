@@ -1,7 +1,7 @@
-import { notFoundError } from "@/erros";
-import { AuthenticatedRequest } from "@/middlewares";
-import { chainsService } from "@/services";
-import { alarmsService } from "@/services/alarms-service";
+import { notFoundError } from "../erros";
+import { AuthenticatedRequest } from "../middlewares";
+import { chainsService } from "../services";
+import { alarmsService } from "../services/alarms-service";
 import { Response } from "express";
 
 export async function listAlarms(req: AuthenticatedRequest, res: Response) {

@@ -1,4 +1,4 @@
-import { telegramRepository } from "@/repositories"
+import { telegramRepository } from "../repositories"
 import { randomBytes } from 'crypto';
 
 

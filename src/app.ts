@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { authRouter, chainRouter  } from "@/routes";
+import { authRouter, chainRouter  } from "./routes";
 import { connectDb, disconnectDB } from "./config/database";
 import alarmsRoute from "./routes/alarms-route";
 import telegramRoute from "./routes/telegram-route";

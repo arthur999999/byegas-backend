@@ -1,5 +1,5 @@
-import { getUserTelegram } from "@/controllers/telegram-contoller";
-import { validateToken } from "@/middlewares";
+import { getUserTelegram } from "../controllers/telegram-contoller";
+import { validateToken } from "../middlewares";
 import { Router } from "express";
 
 const telegramRoute = Router()
